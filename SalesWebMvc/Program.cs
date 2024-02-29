@@ -1,22 +1,28 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using MySqlConnector;
 using SalesWebMvc.Data;
 using System.Configuration;
 
-var builder = WebApplication.CreateBuilder(args);
 
+var builder = WebApplication.CreateBuilder(args);
 
 var connection = builder.Configuration.GetConnectionString(name:"SalesWebMvcContext");
 
 builder.Services.AddDbContext<SalesWebMvcContext>(options =>
     options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+var scope = app.Services.CreateScope();
+
+SalesWebMvcContext context = scope.ServiceProvider.GetRequiredService<SalesWebMvcContext>();
+
+SeedingService seedingService = new SeedingService(context);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -26,15 +32,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
 
-app.UseRouting();
+    app.UseRouting();
 
-app.UseAuthorization();
+    app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+    seedingService.Seed();
+
+    app.Run();
