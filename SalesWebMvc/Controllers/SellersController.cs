@@ -19,5 +19,10 @@ namespace SalesWebMvc.Controllers
 
             return View(list);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
