@@ -5,8 +5,8 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        DateTime BirthDate { get; set; }
-        double BaseSalary { get; set; }
+        public DateTime BirthDate { get; set; }
+        public double BaseSalary { get; set; }
         public Department Department { get; set; }
         public ICollection<SalesRecord> SalesRecord { get; set; } = new List<SalesRecord>();
 
@@ -32,9 +32,9 @@
             SalesRecord.Remove(record);
         }
 
-        public double TotalSales(DateTime initial,  DateTime final)
+        public double TotalSales(DateTime initial, DateTime final)
         {
-            return SalesRecord.Where(sr => sr.Date>=initial && sr.Date<=final).Select(sr => sr.Amount).Sum();
+            return SalesRecord.Where(sr => sr.Date >= initial && sr.Date <= final).Select(sr => sr.Amount).Sum();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using SalesWebMvc.Models.Enums;
+﻿using SalesWebMvc.Models.Entities.Enums;
 
 namespace SalesWebMvc.Models
 {

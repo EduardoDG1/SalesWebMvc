@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SalesWebMvc.Models;
-using SalesWebMvc.Models.Enums;
+using SalesWebMvc.Models.Entities.Enums;
 
 namespace SalesWebMvc.Data
 {

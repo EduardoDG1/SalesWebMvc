@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using MySqlConnector;
 using SalesWebMvc.Data;
+using SalesWebMvc.Models.Services;
 using System.Configuration;
 
 
@@ -12,6 +13,8 @@ var connection = builder.Configuration.GetConnectionString(name:"SalesWebMvcCont
 
 builder.Services.AddDbContext<SalesWebMvcContext>(options =>
     options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
+
+builder.Services.AddScoped<SellerService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
