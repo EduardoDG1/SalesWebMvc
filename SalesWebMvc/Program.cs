@@ -18,9 +18,9 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-var scope = app.Services.CreateScope();
+using var scope = app.Services.CreateScope();
 
-SalesWebMvcContext context = scope.ServiceProvider.GetRequiredService<SalesWebMvcContext>();
+using SalesWebMvcContext context = scope.ServiceProvider.GetRequiredService<SalesWebMvcContext>();
 
 SeedingService seedingService = new SeedingService(context);
 
