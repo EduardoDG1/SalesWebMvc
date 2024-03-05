@@ -1,5 +1,82 @@
-﻿@{
+﻿@model IEnumerable<SalesWebMvc.Models.SalesRecord>
+
+@{
     ViewData["Title"] = "Simple Search";
+    DateTime minDate = DateTime.Parse(ViewData["minDate"] as string);
+    DateTime maxDate = DateTime.Parse(ViewData["maxDate"] as string);
 }
 
 <h2>@ViewData["Title"]</h2>
+
+<nav class="navbar nav-tabs">
+    <div class="container-fluid">
+        <form class="navbar" role="search">
+            <div class="form-group">
+                <div class="form-grup">
+                    <label for="minDate">Min Date</label>
+                    <input type="date" name="minDate" class="nav-item" value=@minDate />
+                    &nbsp;
+                    <label for="maxDate">Max Date</label>
+                    <input type="date" name="maxDate" class="nav-item" value=@maxDate />
+                </div>
+            </div>
+            &nbsp;
+            <button type="submit" class="btn btn-primary">Filter</button>           
+        </form>
+    </div>
+</nav>
+<div class="card mb-3">
+    <div class="card-header text-white bg-primary">
+        Total Sales = $@Model.Sum(obj => obj.Amount).ToString("F2");
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr class="table-success">
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Seller)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Seller.Department)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Seller.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Seller.Department.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
